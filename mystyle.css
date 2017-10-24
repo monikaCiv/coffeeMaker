@@ -1,0 +1,212 @@
+/* BOJE
+BIJELA: #F0E9F0
+SVJETLIJA PLAVA: #365358
+SVJETLIJE SMEĐA: #BD8656
+TAMNIJE SMEĐA: #8B5B3D
+SIVA: rgb(110,107,104)
+*/
+body {
+	background-color: #c6c0bd;
+	width: 100%;
+}
+.logo {
+	font-family: 'Lobster Two', cursive;
+	font-size: 42pt;
+	letter-spacing: 3px;
+	color: #412106;
+	margin-right: 0%;
+}
+.logo2 {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 600;
+	font-size: 12pt;
+	letter-spacing: 3px;
+	color: #87714e;
+	margin-top: -20px;
+	margin-left: 10%;
+	visibility: hidden;
+}
+.menu {
+	display: block;
+	margin-left: 0%;
+	margin-top: -1%;
+	margin-bottom: 2%;
+}
+.menu-bar  {
+	list-style: none;
+}
+
+.menu-bar li {
+	display: inline;
+	margin-left: 5px;
+}
+.menu-bar li a{
+	font-family: 'Open Sans';
+	font-size: 10pt;
+	font-weight: 600;
+	text-decoration: none;
+	color: #412106;
+	letter-spacing: 1px;
+	
+}
+.menu-bar li a:hover{
+	border-bottom: 1px solid;
+	font-family: 'Open Sans';
+	font-weight: 600;
+	text-decoration: none;
+}
+.active{
+	border-bottom: 1px solid;
+	font-family: 'Open Sans';
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.coffee{
+	margin-top: -4%;
+	width: 500px;
+}
+.mixer{
+	margin-top: -4%;
+	width: 500px;
+}
+.mixer svg {
+	margin-left: 75px;
+}
+text {
+	font-family: 'Open Sans';
+	font-weight: 600;
+	text-decoration: none;
+	fill: #412106;/*rgb(110,107,104);/*#87714e; /*  */
+}
+
+
+/*INFO ********************************************/
+
+h1 {
+	font-family: 'Lobster Two';
+	font-size: 16pt;
+	letter-spacing: 1px;
+	color: #412106;
+}
+table {
+	margin: 0 auto;
+	padding-left: 20px;
+}
+.info td {
+	font-family: 'Open Sans';
+	font-size: 10pt;
+	color: #412106;
+	padding-left: 10px;
+}
+.lijevi {
+	font-weight: 600;
+	padding-right: 10px;
+}
+.info img {
+	width: 200px;
+	height: 200px;
+	display: block;
+	margin: 0 auto;
+}
+
+.slike {
+	text-align: center;
+}
+@media screen and (min-width: 100px) {
+	.mixer svg {
+		margin-left: 10px;
+	}
+	.coffee svg {
+		margin-left: -90px;
+	}
+
+}
+@media screen and (min-width: 600px) {
+	.coffee{
+		margin-top: -4%;
+		width: 500px;
+	}
+	.mixer{
+		margin-top: -4%;
+		width: 500px;
+	}
+	.mixer svg {
+		margin-left: 75px;
+	}
+	.coffee svg {
+		margin-left: 0px;
+	}
+	.logo2 {
+		visibility: visible;
+	}
+}
+@media screen and (min-width: 1000px) {
+	body {
+		overflow-x:hidden;
+	}
+	.coffee{
+		float: left;
+		display: inline;
+		margin-left: -30px;
+    }
+	.mixer {
+		float: right;
+		display: inline;
+		margin-right: 0px;
+	}
+	.logo {
+		font-family: 'Lobster Two', cursive;
+		font-size: 42pt;
+		letter-spacing: 3px;
+		color: #412106;
+		margin-right: 35%;
+	}
+	.logo2 {
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 600;
+		font-size: 12pt;
+		letter-spacing: 3px;
+		color: #87714e;
+		margin-top: -20px;
+		margin-left: 12%;
+		visibility: visible;
+	}
+	.menu {
+		display: block;
+		margin-left: 10%;
+		margin-top: -1%;
+		margin-bottom: 2%;
+	}
+
+}
+@media screen and (min-width: 1200px) {
+	.coffee{
+		float: left;
+		display: inline;
+		margin-left: 5%;
+    }
+	.mixer {
+		float: right;
+		display: inline;
+		margin-right: 5%;
+	}
+}
+@media screen and (min-width: 1330px) {
+	.coffee{
+		float: left;
+		display: inline;
+		margin-left: 11%;
+    }
+	.mixer {
+		float: right;
+		display: inline;
+		margin-right: 11%;
+	}
+}
+
+
+
+
+
+

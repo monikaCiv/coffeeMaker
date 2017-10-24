@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Vizualizacija podataka</title>
+	<link rel="icon" href="slike/favicon.ico" type="image/x-icon"/>
+	<link rel="stylesheet" type="text/css" href="mystyle.css">
+	<script type="text/javascript" src="d3.min.js" charset="utf-8"></script>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800italic,800,700italic,700,600italic,600,400italic,300italic,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Poly' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Lobster+Two:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+<style>
+.link line {
+  stroke: #000;
+}
+.link line.separator {
+  stroke: #fff;
+  stroke-width: 2px;
+}
+.node circle {
+  stroke: #000;
+  stroke-width: 2px;
+}
+.node text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+svg {
+	display: block;
+	margin:  auto;
+}
+</style>
+</head>
+<body>
+	<div class="menu">
+		<ul class="menu-bar">
+			<li class="logo">Coffee</li>
+			<li><a href="index.html"> CAFFE APARAT</a></li>
+			<li>|</li>
+			<li><a href="zanimljivosti.html" class="active">KOFEIN</a></li>
+			<li>|</li>
+			<li><a href="info.html">INFORMACIJE</a></li>
+		</ul>
+		<p class="logo2">VISUALISATION</p>
+	</div>
+<div id="molekula">
+	<script>
+		//SLJEDEÆI LAYOUT BILA JE ZADAÆA NAKON JEDNE OD LABORATORIJSKIH VJEŽBI, 
+		//A PRIMJER JE UZET IZ PREDLOŠKA ZA ISTU I PRILAGOÐEN PO POTREBI
+		//DODAN JE I VLASTITI TOOLTIP
+		
+		//BOJE
+		// maslinasta: #8D9E71
+		// bež: c"
+		// #8D9E71
+		// roza: #FF9F8F
+		data = {
+		  "nodes": [
+			{"atom": "N", "size": 14},
+			{"atom": "C", "size": 18},
+			{"atom": "C", "size": 18},
+			{"atom": "C", "size": 18},
+			{"atom": "N", "size": 14},
+			{"atom": "C", "size": 18},
+			{"atom": "O", "size": 14},
+			{"atom": "O", "size": 14},
+			{"atom": "C", "size": 18},
+			{"atom": "C", "size": 18},
+			{"atom": "N", "size": 14},
+			{"atom": "N", "size": 14},
+			{"atom": "H", "size": 8},
+			{"atom": "H", "size": 8},
+			{"atom": "H", "size": 8},
+			{"atom": "H", "size": 8},
+			{"atom": "H", "size": 8},
+			{"atom": "H", "size": 8},
+			{"atom": "C", "size": 18},
+			{"atom": "H", "size": 8},
+			{"atom": "C", "size": 18},
+			{"atom": "H", "size": 8},
+			{"atom": "H", "size": 8},
+			{"atom": "H", "size": 8},
+		  ],
+		  "links": [
+			{"source": 0, "target": 1,  "bond": 1},
+			{"source": 1, "target": 2,  "bond": 2},
+			{"source": 2, "target": 3,  "bond": 1},
+			{"source": 3, "target": 4,  "bond": 1},
+			{"source": 4, "target": 5,  "bond": 1},
+			{"source": 5, "target": 0,  "bond": 1},
+			{"source": 3, "target": 6, "bond": 2},
+			{"source": 5, "target": 7, "bond": 2},
+			{"source": 0, "target": 8, "bond": 1},
+			{"source": 4, "target": 9, "bond": 1},
+			{"source": 1, "target": 10, "bond": 1},
+			{"source": 2, "target": 11, "bond": 1},
+			{"source": 8, "target": 12, "bond": 1},
+			{"source": 8, "target": 13, "bond": 1},
+			{"source": 8, "target": 14, "bond": 1},
+			{"source": 9, "target": 15, "bond": 1},
+			{"source": 9, "target": 16, "bond": 1},
+			{"source": 9, "target": 17, "bond": 1},
+			{"source": 10, "target": 18, "bond": 2},
+			{"source": 18, "target": 19, "bond": 1},
+			{"source": 18, "target": 11, "bond": 1},
+			{"source": 11, "target": 20, "bond": 1},
+			{"source": 20, "target": 21, "bond": 1},
+			{"source": 20, "target": 22, "bond": 1},
+			{"source": 20, "target": 23, "bond": 1}
+		  ]
+		} 
+
+		var width = 960,
+			height = 600;
+
+		var color = d3.scale.ordinal()
+					.range(["#FF9F8F","#A55634","#F2DFBC","#8D9E71"]);
+
+		var radius = d3.scale.sqrt()
+			.range([0, 6]);
+
+		var svg = d3.select("#molekula").append("svg")
+			.attr("width", width)
+			.attr("height", height);
+
+		var force = d3.layout.force()
+			.size([width, height])
+			.charge(-400)
+			.linkDistance(function(d) { return radius(d.source.size) + radius(d.target.size) + 20; });
+
+		  force
+			  .nodes(data.nodes)
+			  .links(data.links)
+			  .on("tick", tick)
+			  .start();
+
+		  var link = svg.selectAll(".link")
+			  .data(data.links)
+			  .enter().append("g")
+			  .attr("class", "link");
+
+		  link.append("line")
+			  .style("stroke-width", function(d) { return (d.bond * 2 - 1) * 2 + "px"; });
+
+		  link.filter(function(d) { return d.bond > 1; }).append("line")
+			  .attr("class", "separator");
+
+		  var node = svg.selectAll(".node")
+			.data(data.nodes)
+			.enter().append("g")
+			.attr("class", "node")
+			.call(force.drag);
+
+		  node.append("circle")
+			.attr("r", function(d) { return radius(d.size); })
+			.style("fill", function(d) { return color(d.atom)})
+			.on("mouseover", function(d){ 
+				d3.select(this).style('fill-opacity',.8);
+				tooltip
+					.style("visibility", "visible").style("opacity",".9")
+					.html(function() {
+						if (d.atom == "C")
+							return "Ugljik";
+						else if (d.atom == "H")
+							return "Vodik";
+						else if (d.atom == "O")
+							return "Kisik";
+						else 
+							return "Dušik";
+					});
+			})
+			.on("mousemove", function(){
+				d3.select(this).style('fill-opacity',.8);
+				tooltip
+					.style('left', (d3.event.pageX - 20) + 'px')
+					.style('top', (d3.event.pageY + 20) + 'px');
+			})
+			.on("mouseout", function(){
+				d3.select(this).style('fill-opacity',1);
+				tooltip.style("visibility", "hidden");
+			});
+
+		  node.append("text")
+			.attr('dy', '.35em')
+			.attr('text-anchor', 'middle')
+			.style('font-family','Open Sans')
+			.style('font-size','14px')
+			.style('font-weight','bold')
+			.style('color','black')
+			.text(function(d) { return d.atom; });
+
+		  function tick() {
+			link.selectAll("line")
+				.attr("x1", function(d) { return d.source.x; })
+				.attr("y1", function(d) { return d.source.y; })
+				.attr("x2", function(d) { return d.target.x; })
+				.attr("y2", function(d) { return d.target.y; });
+
+			node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+		  }
+			
+		var tooltip = d3.select("body")
+        .append("div")
+		.attr("id","tooltip")
+        .style('background-color','white')
+        .style('padding','5px')
+        .style('position', 'absolute')
+        .style('visibility', 'hidden')
+        .style('font-family','Open Sans')
+		.style('font-size', '10px')
+        .style('border-radius','5px');  
+		  
+		  
+	</script>
+</div>
+</body>	
+</html>
